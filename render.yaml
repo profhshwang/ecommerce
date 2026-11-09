@@ -1,0 +1,29 @@
+# Render Blueprint: GitHub 저장소 연결 후 "New > Blueprint" 로 이 파일을 선택하면 자동 생성된다.
+services:
+  - type: web
+    name: price-sourcing-app
+    runtime: docker
+    plan: free
+    region: singapore
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: CONNECTOR_MODE
+        value: scrape
+      - key: DEMO_MODE
+        value: "0"
+      - key: SCRAPE_MIN_INTERVAL_SEC
+        value: "3"
+      - key: CACHE_TTL_SEC
+        value: "1800"
+      - key: CORS_ORIGINS
+        value: "*"
+      # Supabase: 값은 Render 대시보드에서 직접 입력 (sync: false = 저장소에 값이 들어가지 않음)
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: REQUIRE_AUTH
+        value: "1"
